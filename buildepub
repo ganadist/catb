@@ -1,0 +1,37 @@
+#!/usr/bin/env python2
+# encoding: utf-8
+
+import sys
+reload(sys).setdefaultencoding('utf-8')
+import glob, os
+import markdown2
+import markdown
+from markdown.extensions.footnotes import FootnoteExtension
+
+CONVERT = 'ebook-convert'
+HTML_FILENAME = 'catb.html'
+EPUB_FILENAME = 'catb.epub'
+
+out = open(HTML_FILENAME, 'w')
+out.write("""<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>성당과 시장</title>
+<style type="text/css">
+  img {
+    float: center;
+  }
+</style>
+</head><body>
+""")
+
+for filename in sorted(glob.glob("md/*.markdown")):
+    if False:
+        html = markdown2.markdown_path(filename, extras=['footnotes',])
+        out.write(html)
+    else:
+        markdown.markdownFromFile(input = filename, output = out, extensions=[FootnoteExtension(), ])
+
+out.write("</body></html>")
+out.close()
+
+os.system('ebook-convert catb.html catb.epub --authors "Eric S. Raymond" --level1-toc //h:h1 --level2-toc //h:h2 --language ko --page-breaks-before //h:h1 --cover figures/cover.jpg')
