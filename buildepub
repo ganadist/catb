@@ -34,4 +34,4 @@ for filename in sorted(glob.glob("md/*.markdown")):
 out.write("</body></html>")
 out.close()
 
-os.system('ebook-convert catb.html catb.epub --authors "Eric S. Raymond" --level1-toc //h:h1 --level2-toc //h:h2 --language ko --page-breaks-before "//h:h1|//h:hr" --cover figures/cover.jpg')
+os.system('ebook-convert catb.html catb.epub --authors "Eric S. Raymond" --level1-toc //h:h1 --level2-toc //h:h2 --language ko --page-breaks-before //h:h1 --cover figures/cover.jpg')
